@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blivathra — Realm Bedrock</title>
+  <meta name="description" content="Blivathra est un serveur Realm Minecraft Bedrock. Events, builds et bonne ambiance. Rejoins-nous !" />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #121836;
+      --card: #151b3b;
+      --txt: #e7ecff;
+      --muted: #a4b1ffcc;
+      --brand: #7c8cff;
+      --accent: #8ef6ff;
+      --good: #35e08c;
+      --warn: #ffd166;
+      --danger: #ff6b6b;
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--txt);
+      background: radial-gradient(1200px 500px at 70% -10%, #1a2261 0%, transparent 60%),
+                  radial-gradient(1200px 600px at -10% 20%, #10224f 0%, transparent 60%),
+                  var(--bg);
+      line-height: 1.55;
+    }
+
+    /* NAV */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, rgba(11,16,32,.9), rgba(11,16,32,.6));
+      border-bottom: 1px solid #ffffff14;
+    }
+    .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; }
+    .brand { display:flex; align-items:center; gap:10px; font-weight: 800; letter-spacing:.2px; }
+    .brand .logo { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, var(--brand), var(--accent)); box-shadow: var(--shadow); display:grid; place-items:center; color:#0a0f24; font-weight:900; }
+    .nav a { color: var(--txt); text-decoration: none; opacity:.9; }
+    .menu { display:flex; gap:16px; align-items:center; }
+    .menu a { padding:8px 10px; border-radius:10px; }
+    .menu a:hover { background: #ffffff10; }
+    .cta { background: linear-gradient(135deg, var(--brand), var(--accent)); color:#0b1020 !important; font-weight: 700; box-shadow: var(--shadow); }
+
+    /* CONTAINERS */
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 18px; }
+    .section { padding: 48px 0; }
+
+    /* HERO */
+    .hero { display:grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: center; }
+    .hero h1 { font-size: clamp(28px, 4vw, 48px); line-height: 1.05; margin: 0 0 12px; }
+    .hero p.lead { font-size: clamp(16px, 2.2vw, 20px); color: var(--muted); margin: 0 0 22px; }
+    .hero-card { background: linear-gradient(180deg, #161d46, #0f1537); border: 1px solid #ffffff1a; border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
+    .badges { display:flex; flex-wrap:wrap; gap:10px; margin: 14px 0 0; }
+    .badge { font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid #ffffff2a; background:#ffffff0e; }
+
+    /* CARDS */
+    .cards { display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { background: var(--card); border:1px solid #ffffff18; border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
+    .card h3 { margin: 6px 0 8px; font-size: 18px; }
+    .muted { color: var(--muted); }
+
+    /* JOIN */
+    .steps { display:grid; gap: 10px; }
+    .step { display:flex; gap: 12px; align-items:flex-start; background:#ffffff08; border:1px solid #ffffff1a; padding:12px; border-radius:14px; }
+    .step .num { width:28px; height:28px; border-radius:50%; display:grid; place-items:center; background: linear-gradient(135deg, var(--brand), var(--accent)); color:#0b1020; font-weight:900; }
+
+    /* STAFF */
+    .staff-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .staff { display:flex; gap: 12px; align-items:center; background:#ffffff08; border:1px solid #ffffff1a; padding:12px; border-radius:14px; }
+    .avatar { width:42px; height:42px; border-radius: 12px; background: linear-gradient(135deg, #222b65, #6a7bff); display:grid; place-items:center; font-weight:800; }
+    .role { font-size: 12px; opacity:.85; }
+
+    /* RULES */
+    .rules { display:grid; gap: 10px; }
+    .rule { padding: 12px; border-radius: 14px; border:1px solid #ffffff1a; background:#ffffff08; }
+
+    /* FOOTER */
+    footer { border-top:1px solid #ffffff16; padding: 24px 0 60px; color: #c9d2ffb0; font-size: 14px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: 1fr; }
+      .staff-grid { grid-template-columns: 1fr; }
+    }
+      /* EFFECTS */
+    .menu a, .cta { position: relative; overflow: hidden; transition: transform .2s ease, background .2s ease, box-shadow .2s ease, border-color .2s ease; }
+    .menu a:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+    .cta { background-size: 200% 200%; animation: ctabg 6s ease infinite; }
+    @keyframes ctabg { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+    .card { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,.45); border-color:#ffffff2e; }
+    .badge { animation: floatY 6s ease-in-out infinite; }
+    .badge:nth-child(2){ animation-delay:.5s }
+    .badge:nth-child(3){ animation-delay:1s }
+    @keyframes floatY { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-4px) } }
+    .brand .logo { animation: hue 10s linear infinite; }
+    @keyframes hue { from{ filter:hue-rotate(0deg) } to{ filter:hue-rotate(360deg) } }
+    body { animation: bgshift 35s ease-in-out infinite alternate; background-size: auto, auto, 100% 100%; }
+    @keyframes bgshift { 0%{ background-position: 70% -10%, -10% 20%, 0 0 } 100%{ background-position: 60% -20%, -20% 30%, 0 0 } }
+    .nav.scrolled { box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+    /* reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.show { opacity: 1; transform: none; }
+    /* ripple */
+    .ripple { position:absolute; border-radius:50%; transform: scale(0); animation: ripple .6s ease-out; background: #ffffff33; pointer-events:none; }
+    @keyframes ripple { to { transform: scale(6); opacity: 0; } }
+    /* stars canvas */
+    #bg-stars { position: fixed; inset: 0; z-index: -1; opacity:.4; }
+      /* EFFECTS */
+    .menu a, .cta { position: relative; overflow: hidden; transition: transform .2s ease, background .2s ease, box-shadow .2s ease, border-color .2s ease; }
+    .menu a:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+    .cta { background-size: 200% 200%; animation: ctabg 6s ease infinite; }
+    @keyframes ctabg { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+    .card { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,.45); border-color:#ffffff2e; }
+    .badge { animation: floatY 6s ease-in-out infinite; }
+    .badge:nth-child(2){ animation-delay:.5s }
+    .badge:nth-child(3){ animation-delay:1s }
+    @keyframes floatY { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-4px) } }
+    .brand .logo { animation: hue 10s linear infinite; }
+    @keyframes hue { from{ filter:hue-rotate(0deg) } to{ filter:hue-rotate(360deg) } }
+    body { animation: bgshift 35s ease-in-out infinite alternate; background-size: auto, auto, 100% 100%; }
+    @keyframes bgshift { 0%{ background-position: 70% -10%, -10% 20%, 0 0 } 100%{ background-position: 60% -20%, -20% 30%, 0 0 } }
+    .nav.scrolled { box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+    /* reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.show { opacity: 1; transform: none; }
+    /* ripple */
+    .ripple { position:absolute; border-radius:50%; transform: scale(0); animation: ripple .6s ease-out; background: #ffffff33; pointer-events:none; }
+    @keyframes ripple { to { transform: scale(6); opacity: 0; } }
+    /* stars canvas */
+    #bg-stars { position: fixed; inset: 0; z-index: -1; opacity:.4; }
+    /* code box */
+    .codebox { display:flex; align-items:center; gap:10px; background:#0f1537aa; border:1px solid #ffffff26; border-radius:12px; padding:10px; margin-top:12px; }
+    .codebox code { font-size: 18px; letter-spacing: .8px; }
+    .copy-btn { padding:8px 10px; border-radius:10px; border:1px solid #ffffff33; background:#ffffff12; color:var(--txt); cursor:pointer; }
+    .copy-btn:hover { background:#ffffff20; }
+    .toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); background: #10163a; border:1px solid #ffffff26; color: var(--txt); padding:10px 14px; border-radius: 12px; box-shadow: var(--shadow); opacity:0; pointer-events:none; transition: opacity .25s ease, transform .25s ease; }
+    .toast.show { opacity:1; transform: translateX(-50%) translateY(-4px); }
+  </style>
+</head>
+<body>
+  <canvas id="bg-stars"></canvas>
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">BV</div>
+        <a href="#top">Blivathra</a>
+      </div>
+      <nav class="menu">
+        <a href="#histoire">Histoire</a>
+        <a href="#rejoindre">Rejoindre</a>
+        <a href="#staff">Staff</a>
+        <a href="#regles">Règles</a>
+        <a href="https://discord.gg/ypZtsAKmB2" class="cta" target="_blank" rel="noopener">Rejoindre le Discord</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap section" id="top">
+    <section class="hero">
+      <div>
+        <h1>Blivathra — Realm Minecraft Bedrock</h1>
+        <p class="lead">Events, builds et bonne ambiance ! Rejoins une communauté active sur Bedrock Realms. <br>Serveur géré par une équipe sérieuse et dispo.</p>
+        <div class="badges">
+          <span class="badge">Plateforme : Bedrock</span>
+          <span class="badge">Accès : Realm par code</span>
+          <span class="badge">Anti-cheat & règles claires</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>Accès rapide</h3>
+        <p class="muted">Tu veux jouer tout de suite ? Utilise notre <strong>code Realm</strong> ou passe par notre Discord.</p>
+        <div class="codebox" style="margin:10px 0 12px;">
+          <span class="muted">Code :</span>
+          <code id="realm-code-hero">Y8D8HaLsuXujXvs</code>
+          <button class="copy-btn" data-copy="#realm-code-hero">Copier</button>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:6px;">
+          <a class="menu a cta" href="#rejoindre" style="padding:10px 14px; border-radius:12px; text-decoration:none;">Comment rejoindre</a>
+          <a class="menu a" href="https://discord.gg/ypZtsAKmB2" target="_blank" rel="noopener">Discord</a>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <section class="section" id="histoire">
+      <h2>Histoire du monde</h2>
+      <p class="muted">Au tout début du serveur, tout a commencé au <strong>Cube</strong> : une cité née autour d’un mystérieux bloc, protégée par de hauts <strong>murs</strong>. Avec le temps, <strong>plusieurs royaumes</strong> se sont formés, chacun avec sa culture, ses alliances et ses rivalités.</p>
+      <div class="cards">
+        <article class="card">
+          <h3>Au commencement — le Cube</h3>
+          <p>Point d’origine et repère pour tous. Les premiers joueurs y ont établi un camp, bientôt devenu cœur du monde.</p>
+        </article>
+        <article class="card">
+          <h3>La cité murée</h3>
+          <p>Des remparts massifs protègent la ville contre les vagues de monstres et les menaces extérieures. Marché, ateliers, place centrale… tout est parti d’ici.</p>
+        </article>
+        <article class="card">
+          <h3>Naissance des royaumes</h3>
+          <p>Autour de la cité, plusieurs royaumes s’organisent. Chacun a ses règles, ses routes et ses bannières. Diplomatie, commerce… et parfois conflits.</p>
+        </article>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <h3>Et maintenant ?</h3>
+        <p class="muted">Rejoins l’aventure : bâtis ton histoire, forge des alliances, défends tes murs — ou pars explorer des terres encore vierges.</p>
+      </div>
+    </section>
+
+    <section class="section" id="rejoindre">
+      <div class="cards">
+        <article class="card">
+          <h3>Option 1 — Realm (recommandé)</h3>
+          <p class="muted">Blivathra fonctionne en <strong>Realm Bedrock</strong>. Rejoins avec le <strong>code d'invitation</strong> ou en nous donnant ton pseudo pour recevoir une invite.</p>
+          <div class="steps">
+            <div class="step"><div class="num">1</div><div>Dans Minecraft Bedrock : <strong>Jouer → Amis → Rejoindre un Realm</strong>.</div></div>
+            <div class="step"><div class="num">2</div><div>Entre notre <strong>code d'invitation</strong> et valide.</div></div>
+            <div class="step"><div class="num">3</div><div>Accepte et rejoins le monde <strong>Blivathra</strong>. Besoin d'aide ? Contacte le staff sur Discord.</div></div>
+          </div>
+          <div class="codebox">
+            <span class="muted">Code du Realm :</span>
+            <code id="realm-code">Y8D8HaLsuXujXvs</code>
+            <button class="copy-btn" data-copy="#realm-code">Copier</button>
+          </div>
+        </article>
+
+        
+
+        <article class="card">
+          <h3>Bon à savoir</h3>
+          <ul class="muted">
+            <li>Version : Minecraft Bedrock (mobile, console, Windows)</li>
+            <li>Pas de mods requis pour rejoindre</li>
+            <li>Respect des règles obligatoire (voir ci-dessous)</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="staff">
+      <h2>Personnel / Staff</h2>
+      <p class="muted">Une équipe dispo pour t’accueillir et maintenir une bonne ambiance.</p>
+      <div class="staff-grid">
+        <div class="staff">
+          <div class="avatar">KM</div>
+          <div>
+            <div><strong>Kirito_manga</strong></div>
+            <div class="role">Chef / Propriétaire</div>
+          </div>
+        </div>
+        <div class="staff">
+          <div class="avatar">EZ</div>
+          <div>
+            <div><strong>Enzo13ph</strong></div>
+            <div class="role">Modérateur</div>
+          </div>
+        </div>
+        <div class="staff">
+          <div class="avatar">BV</div>
+          <div>
+            <div><strong>Bdvlt</strong></div>
+            <div class="role">Modérateur</div>
+          </div>
+        </div>
+        <div class="staff">
+          <div class="avatar">NZ</div>
+          <div>
+            <div><strong>Nozwal</strong></div>
+            <div class="role">Fondateur du site / Communication</div>
+          </div>
+        </div>
+        <div class="staff">
+          <div class="avatar">ST</div>
+          <div>
+            <div><strong>Staff supplémentaire</strong></div>
+            <div class="role">Helpers & Builders</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="regles">
+      <h2>Règles principales</h2>
+      <div class="rules">
+        <div class="rule"><strong>Respect</strong> — pas d’insultes, harcèlement, discrimination.</div>
+        <div class="rule"><strong>Fair-play</strong> — pas de cheat, duplication ou exploit.</div>
+        <div class="rule"><strong>Anti-grief</strong> — pas de vol ou destruction des builds d’autrui.</div>
+        <div class="rule"><strong>Safe-build</strong> — farms laggy/projets énormes : demander validation au staff.</div>
+        <div class="rule"><strong>Sanctions</strong> — avertissement → mute → kick → ban selon gravité.</div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <h2>Rejoins la communauté</h2>
+      <p class="muted">Le plus simple pour être invité sur le Realm : passe par notre Discord et envoie ton pseudo Bedrock à un membre du staff.</p>
+      <div class="card">
+        <p style="margin:0 0 10px;">Lien Discord :</p>
+        <p style="margin:0 0 8px; font-size: 18px;"><a href="https://discord.gg/ypZtsAKmB2" target="_blank" rel="noopener" style="color: var(--accent); font-weight: 700;">https://discord.gg/ypZtsAKmB2</a></p>
+        <p class="muted" style="margin:0;">Invite Discord officiel • ouvre dans un nouvel onglet.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+      <div>© <span id="year"></span> Blivathra — Tous droits réservés.</div>
+      <div class="muted">Non affilié à Mojang/Microsoft. Minecraft est une marque déposée.</div>
+    </div>
+  </footer>
+
+  <script>
+    // année auto
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // scroll doux pour les ancres
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href');
+        if (id.length > 1) {
+          e.preventDefault();
+          document.querySelector(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+  <script>
+    // === INTERSECTION OBSERVER: reveal on scroll ===
+    const toReveal = document.querySelectorAll('.hero-card, .card, .step, .staff, .rule, .badge');
+    toReveal.forEach(el => el.classList.add('reveal'));
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } });
+    }, { threshold: .15 });
+    toReveal.forEach(el=> io.observe(el));
+
+    // === NAV shadow on scroll ===
+    const nav = document.querySelector('.nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+    window.addEventListener('scroll', onScroll); onScroll();
+
+    // === RIPPLE effect for buttons/links ===
+    const clicks = document.querySelectorAll('.menu a, .cta');
+    clicks.forEach(el => el.addEventListener('click', (e)=>{
+      const r = document.createElement('span');
+      r.className = 'ripple';
+      const rect = el.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      r.style.width = r.style.height = size + 'px';
+      r.style.left = (e.clientX - rect.left - size/2) + 'px';
+      r.style.top = (e.clientY - rect.top - size/2) + 'px';
+      el.appendChild(r);
+      setTimeout(()=> r.remove(), 650);
+    }));
+
+    // === STARFIELD background ===
+    const canvas = document.getElementById('bg-stars');
+    const ctx = canvas.getContext('2d');
+    let w, h, stars;
+    function resize(){ w = canvas.width = innerWidth; h = canvas.height = innerHeight; stars = makeStars(120); }
+    function makeStars(n){ return Array.from({length:n}, ()=>({ x: Math.random()*w, y: Math.random()*h, z: Math.random()*0.6 + 0.4, a: Math.random()*0.6 + 0.2, s: Math.random()*0.6 + 0.2 })) }
+    function draw(){ ctx.clearRect(0,0,w,h); for(const st of stars){ ctx.globalAlpha = st.a; ctx.beginPath(); ctx.arc(st.x, st.y, st.s, 0, Math.PI*2); ctx.fillStyle = '#e7ecff'; ctx.fill(); st.x += (st.z-0.5)*0.3; st.y += (st.z-0.5)*0.3; if(st.x<0) st.x=w; if(st.x>w) st.x=0; if(st.y<0) st.y=h; if(st.y>h) st.y=0; } requestAnimationFrame(draw); }
+    addEventListener('resize', resize); resize(); draw();
+  </script>
+  <div id="toast" class="toast">Copié dans le presse-papiers ✅</div>
+  <script>
+    // === INTERSECTION OBSERVER: reveal on scroll ===
+    const toReveal = document.querySelectorAll('.hero-card, .card, .step, .staff, .rule, .badge');
+    toReveal.forEach(el => el.classList.add('reveal'));
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } });
+    }, { threshold: .15 });
+    toReveal.forEach(el=> io.observe(el));
+
+    // === NAV shadow on scroll ===
+    const nav = document.querySelector('.nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+    window.addEventListener('scroll', onScroll); onScroll();
+
+    // === RIPPLE effect for buttons/links ===
+    const clicks = document.querySelectorAll('.menu a, .cta');
+    clicks.forEach(el => el.addEventListener('click', (e)=>{
+      const r = document.createElement('span');
+      r.className = 'ripple';
+      const rect = el.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      r.style.width = r.style.height = size + 'px';
+      r.style.left = (e.clientX - rect.left - size/2) + 'px';
+      r.style.top = (e.clientY - rect.top - size/2) + 'px';
+      el.appendChild(r);
+      setTimeout(()=> r.remove(), 650);
+    }));
+
+    // === STARFIELD background ===
+    const canvas = document.getElementById('bg-stars');
+    const ctx = canvas.getContext('2d');
+    let w, h, stars;
+    function resize(){ w = canvas.width = innerWidth; h = canvas.height = innerHeight; stars = makeStars(120); }
+    function makeStars(n){ return Array.from({length:n}, ()=>({ x: Math.random()*w, y: Math.random()*h, z: Math.random()*0.6 + 0.4, a: Math.random()*0.6 + 0.2, s: Math.random()*0.6 + 0.2 })) }
+    function draw(){ ctx.clearRect(0,0,w,h); for(const st of stars){ ctx.globalAlpha = st.a; ctx.beginPath(); ctx.arc(st.x, st.y, st.s, 0, Math.PI*2); ctx.fillStyle = '#e7ecff'; ctx.fill(); st.x += (st.z-0.5)*0.3; st.y += (st.z-0.5)*0.3; if(st.x<0) st.x=w; if(st.x>w) st.x=0; if(st.y<0) st.y=h; if(st.y>h) st.y=0; } requestAnimationFrame(draw); }
+    addEventListener('resize', resize); resize(); draw();
+
+    // === COPY realm code + toast ===
+    function copyText(selector){
+      const el = document.querySelector(selector);
+      if(!el) return;
+      const text = el.textContent.trim();
+      navigator.clipboard.writeText(text).then(()=>{
+        const t = document.getElementById('toast');
+        if(!t) return;
+        t.classList.add('show');
+        setTimeout(()=> t.classList.remove('show'), 1400);
+      }).catch(()=>{});
+    }
+    document.querySelectorAll('[data-copy]').forEach(btn => btn.addEventListener('click', ()=> copyText(btn.getAttribute('data-copy'))));
+  </script>
+</body>
+</html>
